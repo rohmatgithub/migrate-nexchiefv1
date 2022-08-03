@@ -3,15 +3,15 @@ package service
 import (
 	"database/sql"
 	"encoding/json"
+	"rohmat.co.id/config"
 	"rohmat.co.id/dao"
 	"rohmat.co.id/model"
-	"testing"
 )
 
-func TestInsertSalesman(t *testing.T) {
-	path := "C:\\cdc-tools\\data sql\\local\\salesman.json"
-	StartReadFile(path, SaveSalesman)
-	//time.Sleep(5 * time.Second)
+func StartInsertSalesman() {
+	path := config.ApplicationConfiguration.GetDirPath().PathDir +
+		config.ApplicationConfiguration.GetDirPath().Salesman
+	StartReadFile(path, SaveSalesman, "salesman")
 }
 
 func SaveSalesman(db *sql.DB, dataByte []byte) (err model.ErrorModel) {

@@ -1,0 +1,22 @@
+{
+  "postgresql": {
+    "address": "user=postgres password=root dbname=bugfixPhase1 sslmode=disable host=localhost port=5432",
+    "default_schema": "nexchief",
+    "max_open_connection": 500,
+    "max_idle_connection": 100
+  },
+  "directory_data": {
+    "path_dir" : "C:/sa",
+    "user_level_1": "",
+    "user_level_2": "",
+    "user_level_3": "",
+    "user_level_4": "",
+    "user_level_5": "",
+    "distributor": "",
+    "mapping_distributor": "",
+    "division": "",
+    "vendor": "",
+    "salesman": "",
+    "customer": ""
+  }
+}

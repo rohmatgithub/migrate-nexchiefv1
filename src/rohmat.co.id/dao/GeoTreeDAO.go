@@ -10,13 +10,13 @@ func InsertGeoTree(db *sql.DB, ncID int64, userParam *model.DataUserLevel) (err 
 	query :=
 		" INSERT INTO  geo_tree " +
 			"  (nexchief_account_id, code, name," +
-			"  level, parent_id ) " +
+			"  level, parent_id, geo_tree_node ) " +
 			" VALUES " +
 			"($1, $2, $3, " +
-			" $4, $5) "
+			" $4, $5, $6) "
 	param := []interface{}{
 		ncID, userParam.Code, userParam.Name,
-		userParam.Level, userParam.ParentID}
+		userParam.Level, userParam.ParentID, userParam.Node}
 
 	_, errS := db.Exec(query, param...)
 	if errS != nil {
@@ -30,11 +30,12 @@ func UpdateGeoTree(db *sql.DB, ncID int64, userParam *model.DataUserLevel) (err 
 	query :=
 		" UPDATE  geo_tree SET " +
 			"nexchief_account_id = $1, code = $2, name = $3," +
-			"level = $4, parent_id = $5 " +
-			"WHERE id = $6 "
+			"level = $4, parent_id = $5, geo_tree_node = $6 " +
+			"WHERE id = $7 "
 	param := []interface{}{
 		ncID, userParam.Code, userParam.Name,
-		userParam.Level, userParam.ParentID, userParam.ID}
+		userParam.Level, userParam.ParentID, userParam.Node,
+		userParam.ID}
 
 	_, errS := db.Exec(query, param...)
 	if errS != nil {

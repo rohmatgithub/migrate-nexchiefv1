@@ -7,7 +7,7 @@ import (
 	"log"
 	"os"
 	"rohmat.co.id/model"
-	"rohmat.co.id/util"
+	"rohmat.co.id/serverconfig"
 	"strings"
 	//"io"
 	_ "github.com/lib/pq"
@@ -129,8 +129,8 @@ func (s Stream) Start(path string) {
 	}
 }
 
-func StartReadFile(path string, start func(db *sql.DB, data []byte) model.ErrorModel) {
-	db := util.ConnectDB()
+func StartReadFile(path string, start func(db *sql.DB, data []byte) model.ErrorModel, partData string) {
+	db := serverconfig.ServerAttribute.DBConnection
 	//errString := "dial tcp 10.10.5.167:5432: connectex: A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond."
 	//errString2 := "read tcp 10.10.3.194:56851->10.10.5.167:5432: wsarecv: A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond."
 
@@ -150,14 +150,14 @@ func StartReadFile(path string, start func(db *sql.DB, data []byte) model.ErrorM
 			err = start(db, data.Data)
 			if err.Error != nil && err.Code == 500 {
 				log.Println(err.Error)
-				return
+				os.Exit(3)
 			} else if err.Error != nil && err.Code != 500 {
 				continue
 			}
 
-			fmt.Println(i)
+			fmt.Println(partData, "-", i)
 		}
 	}()
 	stream.Start(path)
-	fmt.Println("finish")
+	fmt.Println(partData, "finish")
 }

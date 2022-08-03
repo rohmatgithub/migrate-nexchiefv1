@@ -3,18 +3,17 @@ package service
 import (
 	"database/sql"
 	"encoding/json"
+	"rohmat.co.id/config"
 	"rohmat.co.id/dao"
 	"rohmat.co.id/model"
-	"testing"
-	"time"
 )
 
+//dijalankan setelah generate mapping distributor StartSaveMappingDistributor()
+func StartSaveDistributor() {
+	path := config.ApplicationConfiguration.GetDirPath().PathDir +
+		config.ApplicationConfiguration.GetDirPath().Distributor
 
-func TestInsertCompanyProfile(t *testing.T) {
-	path := "C:\\cdc-tools\\data sql\\local\\distributor.json"
-
-	StartReadFile(path, SaveDistributor)
-	time.Sleep(5 * time.Second)
+	StartReadFile(path, SaveDistributor, "profile distributor")
 }
 
 func SaveDistributor(db *sql.DB, dataByte []byte)  (errorModel model.ErrorModel) {

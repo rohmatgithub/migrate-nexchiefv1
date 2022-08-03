@@ -12,4 +12,5 @@ type DataUserLevel struct {
 	Code5    string `json:"userLevel5ID"`
 	NcCode   string `json:"principalID"`
 	Name     string `json:"userLevelName"`
+	Node     bool
 }

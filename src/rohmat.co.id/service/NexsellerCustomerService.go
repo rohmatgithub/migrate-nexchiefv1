@@ -3,27 +3,18 @@ package service
 import (
 	"database/sql"
 	"encoding/json"
+	"rohmat.co.id/config"
 	"rohmat.co.id/dao"
 	"rohmat.co.id/model"
-	"testing"
-	"time"
 )
 
-//func TestRead(t *testing.T){
-//	var (
-//		temp            structNexsellerCustomer
-//	)
-//	errorModel := gonfig.GetConf("C:\\cdc-tools\\data sql\\customer-join-promotion-budget-customer.json", &temp)
-//	if errorModel != nil {
-//		assert.FailNow(t, errorModel.Error())
-//	}
-//}
-func TestSaveNexsellerCustomer(t *testing.T) {
+func StartSaveNexsellerCustomer() {
 	// 2021-01-01
-	path := "C:\\cdc-tools\\data sql\\sbp\\customer_distributor_218039.json"
-	StartReadFile(path, SaveNexsellerCustomer)
-	time.Sleep(5 * time.Second)
+	path := config.ApplicationConfiguration.GetDirPath().PathDir +
+		config.ApplicationConfiguration.GetDirPath().Customer
+	StartReadFile(path, SaveNexsellerCustomer, "nexseller customer")
 }
+
 func SaveNexsellerCustomer(db *sql.DB, dataByte []byte) (errorModel model.ErrorModel) {
 	var (
 		nexchiefAccount model.NexchiefAccount
@@ -58,15 +49,3 @@ func SaveNexsellerCustomer(db *sql.DB, dataByte []byte) (errorModel model.ErrorM
 	}
 	return
 }
-
-//func TestStart(t *testing.T) {
-//	path := "C:\\cdc-tools\\data sql\\test.json"
-//	StartReadFile(path, run)
-//}
-//
-//func run(db *sql.DB, data []byte) model.ErrorModel {
-//	var customer model.NexsellerCustomer
-//	_ = json.Unmarshal(data, &customer)
-//	log.Println(">>", customer.Code)
-//	return model.ErrorModel{}
-//}

@@ -12,7 +12,7 @@ import (
 
 func TestInsertNexsellerProduct(t *testing.T) {
 	path := "C:\\cdc-tools\\data sql\\product-distributor-ID01018901.json"
-	StartReadFile(path, SaveNexsellerProduct)
+	StartReadFile(path, SaveNexsellerProduct, "nexseller product")
 	time.Sleep(5 * time.Second)
 }
 

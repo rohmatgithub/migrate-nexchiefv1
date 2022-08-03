@@ -10,7 +10,7 @@ import (
 
 func ConnectDB() *sql.DB {
 	const defaultSchema = "nexchief"
-	const connectionString = "user=postgres password=root dbname=CDC sslmode=disable host=localhost port=5432 application_name=migrate"
+	const connectionString = "user=postgres password=root dbname=PraDeploy sslmode=disable host=localhost port=5432 application_name=migrate"
 	const maxOpenConnection = 50
 	const maxIdleConnection = 100
 	return GetDbConnection(defaultSchema, connectionString, maxOpenConnection, maxIdleConnection)

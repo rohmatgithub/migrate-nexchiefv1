@@ -3,17 +3,17 @@ package service
 import (
 	"database/sql"
 	"encoding/json"
+	"rohmat.co.id/config"
 	"rohmat.co.id/dao"
 	"rohmat.co.id/model"
-	"testing"
-	"time"
 )
 
-func TestInsertMappingNexseller(t *testing.T) {
-	path := "C:\\cdc-tools\\data sql\\local\\mapping-distributor.json"
+//dijalankan sebelum save distributor  StartSaveDistributor()
+func StartSaveMappingDistributor() {
+	path := config.ApplicationConfiguration.GetDirPath().PathDir +
+		config.ApplicationConfiguration.GetDirPath().MappingDistributor
 
-	StartReadFile(path, saveMappingDistributor)
-	time.Sleep(5 * time.Second)
+	StartReadFile(path, saveMappingDistributor, "mapping distributor")
 }
 
 func saveMappingDistributor(db *sql.DB, dataByte []byte) (err model.ErrorModel) {

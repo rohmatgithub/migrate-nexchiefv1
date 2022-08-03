@@ -4,17 +4,16 @@ import (
 	"database/sql"
 	"encoding/json"
 	_ "github.com/lib/pq"
+	"rohmat.co.id/config"
 	"rohmat.co.id/dao"
 	"rohmat.co.id/model"
-	"testing"
-	"time"
 )
 
-func TestInsertUserLevel1(t *testing.T) {
-	path := "C:\\cdc-tools\\data sql\\local\\user-level-1.json"
+func StartSaveUserLevel1() {
+	path := config.ApplicationConfiguration.GetDirPath().PathDir +
+		config.ApplicationConfiguration.GetDirPath().UserLevel1
 
-	StartReadFile(path, saveUserLevel1)
-	time.Sleep(5 * time.Second)
+	StartReadFile(path, saveUserLevel1, "user level 1")
 }
 
 func saveUserLevel1(db *sql.DB, dataByte []byte) (err model.ErrorModel) {
@@ -44,11 +43,11 @@ func saveUserLevel1(db *sql.DB, dataByte []byte) (err model.ErrorModel) {
 	return
 }
 
-func TestInsertUserLeve2(t *testing.T) {
-	path := "C:\\cdc-tools\\data sql\\local\\user-level-2.json"
+func StartSaveUserLevel2() {
+	path := config.ApplicationConfiguration.GetDirPath().PathDir +
+		config.ApplicationConfiguration.GetDirPath().UserLevel2
 
-	StartReadFile(path, saveUserLevel2)
-	time.Sleep(5 * time.Second)
+	StartReadFile(path, saveUserLevel2, "user level 2")
 }
 
 func saveUserLevel2(db *sql.DB, dataByte []byte) (err model.ErrorModel) {
@@ -80,11 +79,11 @@ func saveUserLevel2(db *sql.DB, dataByte []byte) (err model.ErrorModel) {
 	return
 }
 
-func TestInsertUserLeve3(t *testing.T) {
-	path := "C:\\cdc-tools\\data sql\\local\\user-level-3.json"
+func StartSaveUserLevel3() {
+	path := config.ApplicationConfiguration.GetDirPath().PathDir +
+		config.ApplicationConfiguration.GetDirPath().UserLevel3
 
-	StartReadFile(path, saveUserLevel3)
-	time.Sleep(5 * time.Second)
+	StartReadFile(path, saveUserLevel3, "user level 3")
 }
 
 func saveUserLevel3(db *sql.DB, dataByte []byte) (err model.ErrorModel) {
@@ -116,11 +115,11 @@ func saveUserLevel3(db *sql.DB, dataByte []byte) (err model.ErrorModel) {
 	return
 }
 
-func TestInsertUserLeve4(t *testing.T) {
-	path := "C:\\cdc-tools\\data sql\\local\\user-level-4.json"
+func StartSaveUserLevel4() {
+	path := config.ApplicationConfiguration.GetDirPath().PathDir +
+		config.ApplicationConfiguration.GetDirPath().UserLevel4
 
-	StartReadFile(path, saveUserLevel4)
-	time.Sleep(5 * time.Second)
+	StartReadFile(path, saveUserLevel4, "user level 4")
 
 }
 
@@ -153,11 +152,11 @@ func saveUserLevel4(db *sql.DB, dataByte []byte) (err model.ErrorModel) {
 	return
 }
 
-func TestInsertUserLeve5(t *testing.T) {
-	path := "C:\\cdc-tools\\data sql\\local\\user-level-5.json"
+func StartSaveUserLevel5() {
+	path := config.ApplicationConfiguration.GetDirPath().PathDir +
+		config.ApplicationConfiguration.GetDirPath().UserLevel5
 
-	StartReadFile(path, saveUserLevel5)
-	time.Sleep(5 * time.Second)
+	StartReadFile(path, saveUserLevel5, "user level 5")
 
 }
 
@@ -176,6 +175,7 @@ func saveUserLevel5(db *sql.DB, dataByte []byte) (err model.ErrorModel) {
 		return
 	}
 	err = dao.GetGeoTreeID(db, nexchiefAccount.ID.Int64, &data)
+	data.Node = true
 	if err.Error != nil {
 		return
 	} else if data.ID > 0 {
@@ -189,7 +189,8 @@ func saveUserLevel5(db *sql.DB, dataByte []byte) (err model.ErrorModel) {
 	}
 	return
 }
-//func TestQueryParent(t *testing.T) {
+
+//func TestQueryParent() {
 //	m := make(map[string]interface{})
 //	m["mapping_nexseller_id"] = 1
 //	query, param := GetQueryParent("geo_tree", "geo_tree", "code", m, []interface{}{"GEO1", "GEO2", "GEO3", ""}, 0)
