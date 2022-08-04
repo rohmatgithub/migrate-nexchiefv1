@@ -3,6 +3,7 @@ package service
 import (
 	"database/sql"
 	"encoding/json"
+	"nexsoft.co.id/nexcommon/util"
 	"rohmat.co.id/config"
 	"rohmat.co.id/dao"
 	"rohmat.co.id/model"
@@ -48,6 +49,8 @@ func SaveSalesman(db *sql.DB, dataByte []byte) (err model.ErrorModel) {
 		//		return
 		//	}
 		//}
+		pkString := data.NcCode + data.MnCode + data.Code
+		data.PkChecksum = util.CheckSumWithXXHASH([]byte(pkString))
 		err = dao.InsertSalesman(db, &data, nexchiefAccount, personProfileID, mnID)
 		//err = insertNexsellerProduct(db, nexchiefAccount, mnID, &data)
 		if err.Error != nil {

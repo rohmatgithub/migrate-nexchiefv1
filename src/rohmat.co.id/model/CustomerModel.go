@@ -1,6 +1,5 @@
 package model
 
-
 type NexsellerCustomer struct {
 	ID                          int64
 	CompanyProfileID            int64
@@ -64,4 +63,5 @@ type NexsellerCustomer struct {
 	UserCategory3Code           string `json:"userCategory3ID"`
 	UserCategory3ID             int64
 	FlagVerified                string `json:"flagVerified"`
+	PkChecksum                  string
 }

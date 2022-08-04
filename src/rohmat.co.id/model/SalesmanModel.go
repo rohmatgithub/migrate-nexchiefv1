@@ -31,5 +31,5 @@ type Salesman struct {
 	NexmileVersion          string `json:"nexmileVersion"`
 	NexmileValidThru        string `json:"nexmileValidThru"`
 	NexmileDeviceID         string `json:"nexmileDeviceID"`
+	PkChecksum              string
 }
-

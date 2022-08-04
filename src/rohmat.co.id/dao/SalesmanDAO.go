@@ -93,7 +93,7 @@ func InsertSalesman(db *sql.DB, data *model.Salesman, nc model.NexchiefAccount, 
 		"registration_date, registration_city, registration_latitude, " +
 		"registration_longitude, salesman_group, principal_salesman_type_id," +
 		"nexmile_version, nexmile_valid_thru, nexmile_device_id, " +
-		"status, person_profile_id) " +
+		"status, person_profile_id, pk_checksum) " +
 		"VALUES " +
 		"($1, $2, $3," +
 		"$4, $5, $6, " +
@@ -104,7 +104,7 @@ func InsertSalesman(db *sql.DB, data *model.Salesman, nc model.NexchiefAccount, 
 		"$19, $20, $21, " +
 		"$22, $23, $24, " +
 		"$25, $26, $27, " +
-		"$28, $29) "
+		"$28, $29, $30) "
 	param := []interface{}{
 		nc.ID.Int64, mnID, data.Code,
 		data.Name, data.Address1, data.Address2,
@@ -115,7 +115,7 @@ func InsertSalesman(db *sql.DB, data *model.Salesman, nc model.NexchiefAccount, 
 		getNull(data.RegistrationDate), data.RegistrationCity, data.RegisLat,
 		data.RegisLong, data.Group, data.PrincipalSalesmanTypeID,
 		data.NexmileVersion, getNull(data.NexmileValidThru), data.NexmileDeviceID,
-		data.Status, personProfileID,
+		data.Status, personProfileID, data.PkChecksum,
 	}
 	_, errS := db.Exec(query, param...)
 	if errS != nil {

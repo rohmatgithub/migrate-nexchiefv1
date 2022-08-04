@@ -6,7 +6,7 @@
     "max_idle_connection": 100
   },
   "directory_data": {
-    "path_dir" : "C:/sa",
+    "path_dir" : "C:/cdc-tools/data sql/local/",
     "user_level_1": "",
     "user_level_2": "",
     "user_level_3": "",
@@ -16,7 +16,7 @@
     "mapping_distributor": "",
     "division": "",
     "vendor": "",
-    "salesman": "",
-    "customer": ""
+    "salesman": "salesman_202208040940.json",
+    "customer": "customer-distributor"
   }
 }

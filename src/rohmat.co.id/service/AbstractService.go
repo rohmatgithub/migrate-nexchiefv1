@@ -150,7 +150,8 @@ func StartReadFile(path string, start func(db *sql.DB, data []byte) model.ErrorM
 			err = start(db, data.Data)
 			if err.Error != nil && err.Code == 500 {
 				log.Println(err.Error)
-				os.Exit(3)
+				//os.Exit(3)
+				continue
 			} else if err.Error != nil && err.Code != 500 {
 				continue
 			}

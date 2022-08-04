@@ -3,6 +3,9 @@ package service
 import (
 	"database/sql"
 	"encoding/json"
+	"fmt"
+	"io/ioutil"
+	"nexsoft.co.id/nexcommon/util"
 	"rohmat.co.id/config"
 	"rohmat.co.id/dao"
 	"rohmat.co.id/model"
@@ -12,14 +15,24 @@ func StartSaveNexsellerCustomer() {
 	// 2021-01-01
 	path := config.ApplicationConfiguration.GetDirPath().PathDir +
 		config.ApplicationConfiguration.GetDirPath().Customer
-	StartReadFile(path, SaveNexsellerCustomer, "nexseller customer")
+
+	files, err := ioutil.ReadDir(path)
+	if err != nil {
+		fmt.Println(err.Error())
+		return
+	}
+	for i, file := range files {
+		if !file.IsDir() {
+			StartReadFile(path+"/"+file.Name(), SaveNexsellerCustomer, fmt.Sprintf("nexseller customer %d", i))
+		}
+	}
 }
 
 func SaveNexsellerCustomer(db *sql.DB, dataByte []byte) (errorModel model.ErrorModel) {
 	var (
 		nexchiefAccount model.NexchiefAccount
 		data            model.NexsellerCustomer
-		mnID int64
+		mnID            int64
 	)
 	_ = json.Unmarshal(dataByte, &data)
 
@@ -37,6 +50,8 @@ func SaveNexsellerCustomer(db *sql.DB, dataByte []byte) (errorModel model.ErrorM
 	if errorModel.Error != nil {
 		return
 	} else if data.ID == 0 {
+		pkString := data.NcCode + data.MnCode + data.Code
+		data.PkChecksum = util.CheckSumWithXXHASH([]byte(pkString))
 		// get company profile id
 		errorModel = dao.GetCompanyProfile(db, &data)
 		if errorModel.Error != nil {

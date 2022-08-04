@@ -167,7 +167,7 @@ func InsertNexsellerCustomer(db *sql.DB, nc model.NexchiefAccount, mnID int64, d
 		"sub_district_id, urban_village_id, join_date, " +
 		"last_sync_dms, store_location_id, store_status_id, " +
 		"location_remark, flag_verified, user_category_id_1, " +
-		"user_category_id_2, user_category_id_3 ) " +
+		"user_category_id_2, user_category_id_3, pk_checksum ) " +
 		"VALUES " +
 		"($1, $2, $3, " +
 		"$4, $5, $6, " +
@@ -181,7 +181,7 @@ func InsertNexsellerCustomer(db *sql.DB, nc model.NexchiefAccount, mnID int64, d
 		"$28, $29, $30," +
 		"$31, $32, $33," +
 		"$34, $35, $36," +
-		"$37, $38) "
+		"$37, $38, $39) "
 	param := []interface{}{
 		nc.ID.Int64, mnID, data.CompanyProfileID,
 		data.Code, data.Name, data.Address1,
@@ -195,7 +195,7 @@ func InsertNexsellerCustomer(db *sql.DB, nc model.NexchiefAccount, mnID int64, d
 		data.SubDistrictID, data.UrbanVillageID, getNull(data.JoinDate),
 		getNull(data.LastSync), data.StoreLocationID, data.StoreStatusID,
 		data.LocationRemark, data.FlagVerified, data.UserCategory1ID,
-		data.UserCategory2ID, data.UserCategory3ID,
+		data.UserCategory2ID, data.UserCategory3ID, data.PkChecksum,
 	}
 	stmt, errS := db.Prepare(query)
 	if errS != nil {
