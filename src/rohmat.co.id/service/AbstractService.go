@@ -150,6 +150,7 @@ func StartReadFile(path string, start func(db *sql.DB, data []byte) model.ErrorM
 			err = start(db, data.Data)
 			if err.Error != nil && err.Code == 500 {
 				log.Println(err.Error)
+				//_, _ = fmt.Fprintln(serverconfig.ServerAttribute.Write, fmt.Sprintf(partData+" - %d error : %s", i, err.Error))
 				//os.Exit(3)
 				continue
 			} else if err.Error != nil && err.Code != 500 {
@@ -157,6 +158,7 @@ func StartReadFile(path string, start func(db *sql.DB, data []byte) model.ErrorM
 			}
 
 			fmt.Println(partData, "-", i)
+			_, _ = fmt.Fprintln(serverconfig.ServerAttribute.Write, fmt.Sprintf(partData+" - %d", i))
 		}
 	}()
 	stream.Start(path)

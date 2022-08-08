@@ -12,7 +12,7 @@ import (
 
 var MapNexchiefAccount = make(map[string]model.NexchiefAccount)
 
-func GetQueryParent(tableName, key, fieldClause string, clauseMustCheck map[string]interface{}, listData []interface{}, lengthParam int) (query string, queryParam []interface{}) {
+func GetQueryParent(tableName, key, fieldClause, addSelect string, clauseMustCheck map[string]interface{}, listData []interface{}, lengthParam int) (query string, queryParam []interface{}) {
 	query += fmt.Sprintf("SELECT '%s', ", key)
 	clause := " "
 	tempLengthParam := lengthParam
@@ -23,7 +23,12 @@ func GetQueryParent(tableName, key, fieldClause string, clauseMustCheck map[stri
 		}
 		l++
 		if l == 1 {
-			query += fmt.Sprintf(" lv%d.id FROM %s lv%d", i, tableName, i)
+			query += fmt.Sprintf(" lv%d.id ", i)
+			if addSelect != "" {
+				query += fmt.Sprintf(", lv%d.%s ", i, addSelect)
+			}
+
+			query += fmt.Sprintf(" FROM %s lv%d", tableName, i)
 		} else {
 			query += fmt.Sprintf(" LEFT JOIN %s lv%d ON lv%d.id = lv%d.parent_id ", tableName, i, i, i+1)
 		}

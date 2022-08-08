@@ -15,7 +15,7 @@ func GetMappingNexseller(db *sql.DB, ncId int64, data *model.MappingNexseller) (
 			"UNION ALL "
 	m := make(map[string]interface{})
 	m["nexchief_account_id"] = ncId
-	tempQuery, tempParam := GetQueryParent("geo_tree", "gt", "code", m, []interface{}{
+	tempQuery, tempParam := GetQueryParent("geo_tree", "gt", "code", "", m, []interface{}{
 		data.UserLevel1, data.UserLevel2, data.UserLevel3, data.UserLevel4, data.UserLevel5,
 	}, 4)
 

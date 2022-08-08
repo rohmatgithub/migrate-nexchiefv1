@@ -1,6 +1,6 @@
 {
   "postgresql": {
-    "address": "user=postgres password=root dbname=bugfixPhase1 sslmode=disable host=localhost port=5432",
+    "address": "user=postgres password=root dbname=PraDeploy sslmode=disable host=localhost port=5432",
     "default_schema": "nexchief",
     "max_open_connection": 500,
     "max_idle_connection": 100
@@ -17,6 +17,8 @@
     "division": "",
     "vendor": "",
     "salesman": "salesman_202208040940.json",
-    "customer": "customer-distributor"
+    "customer": "customer-distributor",
+    "island": "island.json",
+    "nexseller_product": "product-distributor"
   }
 }

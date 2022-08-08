@@ -57,7 +57,7 @@ func GetGeoTreeID(db *sql.DB, ncID int64, data *model.DataUserLevel) (err model.
 func GetParent(db *sql.DB, ncID int64, data *model.DataUserLevel, listData []interface{}) (err model.ErrorModel) {
 	m := make(map[string]interface{})
 	m["nexchief_account_id"] = ncID
-	query, param := GetQueryParent("geo_tree", "parent", "code", m, listData, 0)
+	query, param := GetQueryParent("geo_tree", "parent", "code", "", m, listData, 0)
 
 	rows, errS := db.Query(query, param...)
 	if errS != nil {

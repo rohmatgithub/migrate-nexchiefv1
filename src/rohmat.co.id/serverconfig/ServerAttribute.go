@@ -1,10 +1,12 @@
 package serverconfig
 
 import (
+	"bufio"
 	"database/sql"
 	"github.com/afex/hystrix-go/hystrix"
 	"github.com/bukalapak/go-redis"
 	"nexsoft.co.id/nexcommon/db/dbconfig"
+	"os"
 	"rohmat.co.id/config"
 	"strconv"
 )
@@ -15,6 +17,7 @@ type serverAttribute struct {
 	Version                                  string
 	DBConnection                             *sql.DB
 	SQLMigrationResolutionDir                string
+	Write *bufio.Writer
 }
 
 func SetServerAttribute() {
@@ -23,6 +26,8 @@ func SetServerAttribute() {
 	dbMaxOpenConnection := config.ApplicationConfiguration.GetPostgreSQLMaxOpenConnection()
 	dbMaxIdleConnection := config.ApplicationConfiguration.GetPostgreSQLMaxIdleConnection()
 	ServerAttribute.DBConnection = dbconfig.GetDbConnection(dbParam, dbConnection, dbMaxOpenConnection, dbMaxIdleConnection)
+	f, _ := os.Create("file.log")
+	ServerAttribute.Write = bufio.NewWriter(f)
 }
 
 func getRedisClient(host string, port int, db int, password string, optCB *hystrix.CommandConfig) *redis.Client {

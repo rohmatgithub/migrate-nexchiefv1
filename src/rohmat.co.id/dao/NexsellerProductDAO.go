@@ -80,7 +80,7 @@ func InsertNexsellerProduct(db *sql.DB, nc model.NexchiefAccount, mnID int64, mo
 		"uom_4, conversion_1_to_4, conversion_2_to_4, " +
 		"conversion_3_to_4, status, buying_price, " +
 		"selling_price, nexchief_ratio, nexseller_vendor_id, " +
-		"nexseller_division_id) " +
+		"nexseller_division_id, pk_checksum) " +
 		"VALUES " +
 		"($1, $2, $3, " +
 		"$4, $5, $6, " +
@@ -88,7 +88,7 @@ func InsertNexsellerProduct(db *sql.DB, nc model.NexchiefAccount, mnID int64, mo
 		"$10, $11, $12," +
 		"$13, $14, $15," +
 		"$16, $17, $18," +
-		"$19) "
+		"$19, $20) "
 	param := []interface{}{
 		model.Code, model.PrincipalProductID, nc.ID.Int64,
 		mnID, model.Name, model.Packaging,
@@ -96,7 +96,35 @@ func InsertNexsellerProduct(db *sql.DB, nc model.NexchiefAccount, mnID int64, mo
 		model.Uom4, model.Conversion1to4, model.Conversion2to4,
 		model.Conversion3to4, model.Status, model.BuyingPrice,
 		model.SellingPrice, model.NexchiefRatio, model.VendorID,
-		model.DivisionID,
+		model.DivisionID, model.PkChecksum,
+	}
+	_, errS := db.Exec(query, param...)
+	if errS != nil {
+		err = generateErrorModel(errS)
+	}
+	return
+}
+
+
+func UpdateNexsellerProduct(db *sql.DB, nc model.NexchiefAccount, mnID int64, model *model.NexsellerProduct) (err model.ErrorModel) {
+	query := "UPDATE " + getSchema("nexseller_product", nc.Schema.String) +
+		"SET product_code = $1, product_id = $2, nexchief_account_id = $3, " +
+		"mapping_nexseller_id = $4, name = $5, packaging = $6, " +
+		"uom_1 = $7, uom_2 = $8, uom_3 = $9, " +
+		"uom_4 = $10, conversion_1_to_4 = $11, conversion_2_to_4 = $12, " +
+		"conversion_3_to_4 = $13, status = $14, buying_price = $15, " +
+		"selling_price = $16, nexchief_ratio = $17, nexseller_vendor_id = $18, " +
+		"nexseller_division_id = $19, pk_checksum = $20 " +
+		"WHERE id = $21 "
+	param := []interface{}{
+		model.Code, model.PrincipalProductID, nc.ID.Int64,
+		mnID, model.Name, model.Packaging,
+		model.Uom1, model.Uom2, model.Uom3,
+		model.Uom4, model.Conversion1to4, model.Conversion2to4,
+		model.Conversion3to4, model.Status, model.BuyingPrice,
+		model.SellingPrice, model.NexchiefRatio, model.VendorID,
+		model.DivisionID, model.PkChecksum,
+		model.ID,
 	}
 	_, errS := db.Exec(query, param...)
 	if errS != nil {

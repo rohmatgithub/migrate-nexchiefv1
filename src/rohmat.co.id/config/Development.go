@@ -24,6 +24,8 @@ type DirPath struct {
 	Vendor             string `json:"vendor"`
 	Salesman           string `json:"salesman"`
 	Customer           string `json:"customer"`
+	Island             string `json:"island"`
+	NexsellerProduct   string `json:"nexseller_product"`
 }
 
 func (input DevelopmentConfig) GetPostgreSQLAddress() string {

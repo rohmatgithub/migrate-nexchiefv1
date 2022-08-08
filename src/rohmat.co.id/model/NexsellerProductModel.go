@@ -1,6 +1,5 @@
 package model
 
-
 type NexsellerProduct struct {
 	ID                   int64
 	NcCode               string `json:"principalID"`
@@ -25,4 +24,5 @@ type NexsellerProduct struct {
 	DivisionID           int64
 	VendorCode           string `json:"vendorID"`
 	VendorID             int64
+	PkChecksum           string
 }
