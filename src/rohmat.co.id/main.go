@@ -6,6 +6,8 @@ import (
 	"rohmat.co.id/config"
 	"rohmat.co.id/serverconfig"
 	"rohmat.co.id/service"
+	"sync"
+
 	//_ "github.com/golang-migrate/migrate/source/file"
 	_ "github.com/lib/pq"
 )
@@ -43,12 +45,12 @@ func main() {
 	service.StartInsertSalesman()
 
 
-	//var wg sync.WaitGroup
-	//
-	//service.StartSaveNexsellerProduct(&wg)
-	//// save nexseller customer
-	//service.StartSaveNexsellerCustomer(&wg)
-	//
-	//wg.Wait()
+	var wg sync.WaitGroup
+
+	service.StartSaveNexsellerProduct(&wg)
+	// save nexseller customer
+	service.StartSaveNexsellerCustomer(&wg)
+
+	wg.Wait()
 	//fmt.Println("====== FINISH ======")
 }

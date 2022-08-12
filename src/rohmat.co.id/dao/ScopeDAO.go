@@ -5,6 +5,38 @@ import (
 	"rohmat.co.id/model"
 )
 
+
+func GetListIDMappingPrincipalForScope(db *sql.DB) (resultList []int64, err model.ErrorModel) {
+	query := "SELECT id FROM mapping_principal order by id"
+	rows, errS := db.Query(query)
+	if errS != nil {
+		err = generateErrorModel(errS)
+		return
+	}
+	if rows != nil {
+		defer func() {
+			errS = rows.Close()
+			if errS != nil {
+				err = generateErrorModel(errS)
+				return
+			}
+		}()
+
+		for rows.Next() {
+			var id sql.NullInt64
+
+			errS = rows.Scan(&id)
+			if errS != nil {
+				err = generateErrorModel(errS)
+				return
+			} else if id.Int64 > 0 {
+				resultList = append(resultList, id.Int64)
+			}
+		}
+	}
+	return
+}
+
 func GetListIDNexchiefAccountForScope(db *sql.DB) (resultList []int64, err model.ErrorModel) {
 	query := "SELECT id FROM nexchief_account order by id"
 	rows, errS := db.Query(query)
